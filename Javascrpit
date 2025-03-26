@@ -1,0 +1,35 @@
+var myInput=document.getElementById("myInput");
+var myUL=document.getElementById("myUL");
+function AddTask(){
+    if(myInput.value== ''){
+        alert("You must write something!");
+    }
+    else{
+        var li =document.createElement("li");
+        li.innerHTML=myInput.value;
+        myUL.appendChild(li);
+        var span=document.createElement("span");
+        span.innerHTML="Del";
+        li.appendChild(span);
+    }
+    myInput.value= "";
+    saveData();
+}
+myUL.addEventListener("click",function(e){
+    if(e.target.tagName === "LI"){
+        e.target.classList.toggle("checked");
+        saveData();
+    }
+    else if(e.target.tagName === "SPAN"){
+        e.target.parentElement.remove();
+        saveData();
+    }
+}, false);
+
+function saveData(){
+    localStorage("data", myUL.innerHTML);
+}
+function showTask(){
+    myUL.innerHTML=localStorage.getItem("data");
+}
+showTask();
